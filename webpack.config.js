@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = (env, argv) => {
   return {
-    entry: './src/index.ts',
+    entry: './src/index',
     devtool: argv.mode === 'production' ? 'source-map' : 'inline-source-map',
     devServer: {
       static: './dist'
@@ -24,7 +24,9 @@ module.exports = (env, argv) => {
               loader: 'css-loader',
               options: {
                 importLoaders: 1,
-                modules: true
+                modules: {
+                  exportLocalsConvention: 'camelCase'
+                }
               }
             },
             {
@@ -39,7 +41,8 @@ module.exports = (env, argv) => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        title: 'Development'
+        title: 'Development',
+        template: './src/index.html'
       }),
       new MiniCssExtractPlugin({
         filename: '[name].stories.css'
